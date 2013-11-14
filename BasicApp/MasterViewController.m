@@ -7,7 +7,6 @@
 //
 
 #import "MasterViewController.h"
-
 #import "DetailViewController.h"
 
 @interface MasterViewController () {
@@ -25,11 +24,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    self.navigationItem.leftBarButtonItem = self.editButtonItem;
-
-    UIBarButtonItem *addButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAdd target:self action:@selector(insertNewObject:)];
-    self.navigationItem.rightBarButtonItem = addButton;
+    self.title = @"タイトル";
+    myData = [[NSArray alloc] initWithObjects:
+              @"コンテンツ１", @"コンテンツ２", @"コンテンツ３", @"コンテンツ４", nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -57,15 +54,20 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return _objects.count;
+    return [myData count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    static NSString *CellIdentifier = @"myCell";
 
-    NSDate *object = _objects[indexPath.row];
-    cell.textLabel.text = [object description];
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    
+    if(cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+    }
+    
+    cell.textLabel.text = [myData objectAtIndex:indexPath.row];
     return cell;
 }
 
@@ -103,10 +105,10 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    if ([[segue identifier] isEqualToString:@"showDetail"]) {
-        NSIndexPath *indexPath = [self.tableView indexPathForSelectedRow];
-        NSDate *object = _objects[indexPath.row];
-        [[segue destinationViewController] setDetailItem:object];
+    if ([[segue identifier] isEqualToString:@"mySegue"]) {
+        DetailViewController *viewController = [segue destinationViewController];
+        NSInteger selectedIndex = [[self.tableView indexPathForSelectedRow] row];
+        viewController.myStr = [myData objectAtIndex:selectedIndex];
     }
 }
 

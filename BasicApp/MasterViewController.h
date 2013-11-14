@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MasterViewController : UITableViewController
+@interface MasterViewController : UITableViewController {
+    NSArray *myData;
+}
 
 @end
