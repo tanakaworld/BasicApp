@@ -13,6 +13,7 @@
 @end
 
 @implementation DetailViewController
+@synthesize myStr;
 
 #pragma mark - Managing the detail item
 
@@ -26,6 +27,11 @@
     }
 }
 
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+
+}
+
 - (void)configureView
 {
     // Update the user interface for the detail item.
@@ -37,9 +43,11 @@
 
 - (void)viewDidLoad
 {
+    // 下層画面が生成され、表示する準備ができたときの処理
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
     [self configureView];
+    
+    self.myLabel.text = myStr;
 }
 
 - (void)didReceiveMemoryWarning

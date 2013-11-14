@@ -8,7 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface DetailViewController : UIViewController
+@interface DetailViewController : UIViewController {
+    NSString *myStr;
+}
+@property (weak, nonatomic) IBOutlet UILabel *myLabel;
+@property (nonatomic,retain) NSString *myStr;
 
 @property (strong, nonatomic) id detailItem;
 
